@@ -15,5 +15,9 @@ object Main {
     println(fibs)
     println(fpinscala.laziness.Stream(1,2,3,4) startsWith fpinscala.laziness.Stream(1,2))
     println(fpinscala.laziness.Stream(1,2,3).scanRight(0)(_ + _).toList)
+
+    import fpinscala.state._
+    val m = Machine(true, 2, 0)
+    println(Machine.simulateMachine(List(Coin, Turn, Coin, Turn, Turn, Coin, Coin, Turn)).run(m))
   }
 }
