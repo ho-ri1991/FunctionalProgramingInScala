@@ -1,4 +1,7 @@
+import java.util.concurrent.{Executor, Executors}
+
 import chapter2.Chapter2._
+import fpinscala._
 
 object Main {
 
@@ -19,5 +22,10 @@ object Main {
     import fpinscala.state._
     val m = Machine(true, 2, 0)
     println(Machine.simulateMachine(List(Coin, Turn, Coin, Turn, Turn, Coin, Coin, Turn)).run(m))
+
+//    val a = parallelism.Par.lazyUnit(42 + 1)
+//    val S = Executors.newFixedThreadPool(1)
+//    val b = parallelism.Par.fork(a)
+//    println(b(S).get)
   }
 }
