@@ -18,6 +18,9 @@ object RNG{
 
   val int: Rand[Int] = _.nextInt
 
+  def boolean: Rand[Boolean] =
+    map(_.nextInt){n => if(n % 2 == 0)true else false}
+
   def nonNegativeInt(rng: RNG): (Int, RNG) = {
     val (n, next) = rng.nextInt
     val res = if(n < 0) -(n + 1) else n
