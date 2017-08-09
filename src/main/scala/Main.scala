@@ -1,7 +1,9 @@
-import java.util.concurrent.{Executor, Executors}
+import java.util.concurrent.{Executor, ExecutorService, Executors}
 
 import chapter2.Chapter2._
 import fpinscala._
+import fpinscala.testing._
+import fpinscala.parallelism._
 
 object Main {
 
@@ -27,5 +29,28 @@ object Main {
 //    val S = Executors.newFixedThreadPool(1)
 //    val b = parallelism.Par.fork(a)
 //    println(b(S).get)
+
+    val smallInt = Gen.choose(-10, 10)
+    val maxProp = Prop.forAll(Gen.listOf1(smallInt)){ ns =>
+      val max = ns.max
+      !ns.exists(_ > max)
+    }
+    Prop.run(maxProp)
+
+    val ES: ExecutorService = Executors.newCachedThreadPool
+    val p2 = Prop.check {
+      val p = Par.map(Par.unit(1))(_ + 1)
+      val p2 = Par.unit(2)
+      p(ES).get == p2(ES).get
+    }
+    Prop.run(p2)
+
+    val p3 = Prop.check {
+      Prop.equal(
+        Par.map(Par.unit(1))(_ + 1),
+        Par.unit(2)
+      )(ES).get
+    }
+    Prop.run(p3)
   }
 }
