@@ -4,6 +4,7 @@ import chapter2.Chapter2._
 import fpinscala._
 import fpinscala.testing._
 import fpinscala.parallelism._
+import fpinscala.monids._
 
 object Main {
 
@@ -52,5 +53,7 @@ object Main {
       )(ES).get
     }
     Prop.run(p3)
+
+    println(Monoid.bag(Vector("a", "b", "aa", "aa", "b")))
   }
 }
